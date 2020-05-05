@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.lang.*;
+//import java.lang.*;
 
 public class TicTacToe {
 
@@ -8,6 +8,7 @@ public class TicTacToe {
     private static Character player1Mark;
     private static Character player2Mark;
     private static int[] kullanilanlar = new int[9];
+    private static int nextIndex = 0;
 
     public static void boardInputExample()
     {
@@ -32,7 +33,8 @@ public class TicTacToe {
 
     public static void rulesPrinter()
     {
-        System.out.println("X-O-X \nAlta alta, üst üste veya çapraz olarak üçleyen kazanır.\nX her zaman önce başlar. \nSeçimlerinizi aşağıdaki tabloya göre yapınız: ");
+        System.out.println("X-O-X \nAlta alta, üst üste veya çapraz olarak üçleyen kazanır."+
+        "\nX her zaman önce başlar. \nSeçimlerinizi aşağıdaki tabloya göre yapınız: ");
         boardInputExample();
         for (int i = 0; i < 3; i++)
         {
@@ -82,6 +84,7 @@ public class TicTacToe {
 
             }
         }
+        pushNextIndex(selection);
         char mark = ch;
         switch (selection)
         {
@@ -114,6 +117,12 @@ public class TicTacToe {
                 board[2][2] = mark;
                 break;
         }
+    }
+
+    public static void pushNextIndex(int element)
+    {
+        kullanilanlar[nextIndex] = element;
+        nextIndex++;
     }
 
     public static int checkRowForWin()
@@ -168,7 +177,6 @@ public class TicTacToe {
         markSetter();
         int x = 0;
         while (true){
-            int check = 0;
             playerSelection(x % 2);
             System.out.print("\033[H\033[2J");
             for (Character[] obj: board)
@@ -197,6 +205,11 @@ public class TicTacToe {
                     System.out.println("OYUNCU 1 KAZANDI!");
                 } break;}
             }
+            if ((kullanilanlar[8] != 0) && checkForWin() == 0)
+            {
+                System.out.println("BERABERE!");
+                break;
+            } 
             x++;
         }
     }
