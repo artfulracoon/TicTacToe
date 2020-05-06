@@ -12,6 +12,7 @@ public class TicTacToe {
     private static int chooser = 1;
     private static int oyuncu1Win = 0;
     private static int oyuncu2Win = 0;
+    private static String oyuncu1Ad, oyuncu2Ad;
 
     public static void boardInputExample() {
         int[][] thisBoard = new int[3][3];
@@ -52,7 +53,7 @@ public class TicTacToe {
     }
 
     public static void rulesPrinter() {
-        System.out.println("X-O-X \nAlta alta, üst üste veya çapraz olarak üçleyen kazanır."
+        System.out.println("X-O-X \n\nAlta alta, üst üste veya çapraz olarak üçleyen kazanır."
                 + "\nX her zaman önce başlar. \nSeçimlerinizi aşağıdaki tabloya göre yapınız: ");
         boardInputExample();
         boardReset();
@@ -60,16 +61,16 @@ public class TicTacToe {
 
     public static void markSetter() {
         do {
-            System.out.println("Oyuncu 1: X mi O mu?");
+            System.out.println(oyuncu1Ad + ": X mi O mu?");
             char mark = getInput().next().charAt(0);
             setPlayer1Mark(Character.toUpperCase(mark));
         } while (getPlayer1Mark() != 'X' && getPlayer1Mark() != 'O');
         System.out.print("\033[H\033[2J");
         if (getPlayer1Mark() == 'X') {
-            System.out.println("Oyuncu 1 X olarak belirlendi. \nOyuncu 2 O olarak belirlendi.\n");
+            System.out.println("Oyuncu 1 " + oyuncu1Ad + " X olarak belirlendi." + "\nOyuncu 2 " + oyuncu2Ad + " O olarak belirlendi.\n");
             setPlayer2Mark('O');
         } else {
-            System.out.println("Oyuncu 1 O olarak belirlendi. \nOyuncu 2 X olarak belirlendi.\n");
+            System.out.println("Oyuncu 1 " + oyuncu1Ad + " O olarak belirlendi." + "\nOyuncu 2 " + oyuncu2Ad + " X olarak belirlendi.\n");
             setPlayer2Mark('X');
         }
     }
@@ -192,6 +193,7 @@ public class TicTacToe {
 
     public static void gameStart() {
         rulesPrinter();
+        adSetter();
         markSetter();
         int x = 0;
         while (!shouldBreak) {
@@ -203,10 +205,10 @@ public class TicTacToe {
                 switch (x % 2) {
                     case 0:
                         if (getPlayer1Mark() == 'X') {
-                            System.out.println("\nOYUNCU 1 KAZANDI!");
+                            System.out.println("\n" + oyuncu1Ad + " KAZANDI!");
                             oyuncu1Win++;
                         } else {
-                            System.out.println("\nOYUNCU 2 KAZANDI!");
+                            System.out.println("\n" + oyuncu2Ad + " KAZANDI!");
                             oyuncu2Win++;
                         }
                         shouldBreak = true;
@@ -214,10 +216,10 @@ public class TicTacToe {
 
                     case 1:
                         if (getPlayer1Mark() == 'X') {
-                            System.out.println("\nOYUNCU 2 KAZANDI!");
+                            System.out.println("\n" + oyuncu1Ad + " KAZANDI!");
                             oyuncu2Win++;
                         } else {
-                            System.out.println("\nOYUNCU 1 KAZANDI!");
+                            System.out.println("\n" + oyuncu2Ad + " KAZANDI!");
                             oyuncu1Win++;
                         }
                         shouldBreak = true;
@@ -286,10 +288,20 @@ public class TicTacToe {
         }
     }
 
+    private static void adSetter()
+    {
+        System.out.println("Oyuncu 1 isminizi giriniz: (Default: Oyuncu 1)");
+        oyuncu1Ad = getInput().nextLine();
+        if (oyuncu1Ad.isEmpty()) {oyuncu1Ad = "Oyuncu 1";}       
+        System.out.println("Oyuncu 2 isminizi giriniz: (Default: Oyuncu 2)");
+        oyuncu2Ad = getInput().nextLine();
+        if (oyuncu2Ad.isEmpty()) {oyuncu2Ad = "Oyuncu 2";} 
+    }
+
     public static void main(String[] args) {
         while (chooser == 1) {
             gameStart();
-            System.out.println("\nOyuncu 1: " + oyuncu1Win + "\nOyuncu 2: " + oyuncu2Win);
+            System.out.println("\n" + oyuncu1Ad +": " + oyuncu1Win + "\n" + oyuncu2Ad + ": " + oyuncu2Win);
             System.out.println("\nDevam etmek istiyor musun? \n1. Evet \n2. Hayır\n");
             wannaContinue();
 
