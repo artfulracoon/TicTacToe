@@ -25,6 +25,7 @@ public class TicTacToe {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public static void boardReset() {
@@ -39,31 +40,35 @@ public class TicTacToe {
         nextIndex = 0;
     }
 
+    public static void printCurrentBoard()
+    {
+        for (Character[] obj : board) {
+            for (Character obj2 : obj) {
+                System.out.print(obj2 + " ");
+            }
+            System.out.println();
+        }
+    }
+
     public static void rulesPrinter() {
         System.out.println("X-O-X \nAlta alta, üst üste veya çapraz olarak üçleyen kazanır."
                 + "\nX her zaman önce başlar. \nSeçimlerinizi aşağıdaki tabloya göre yapınız: ");
         boardInputExample();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = '-';
-            }
-        }
+        boardReset();
     }
-
+    
     public static void markSetter() {
-        System.out.println("Oyuncu 1: X mi O mu?");
         do {
+            System.out.println("Oyuncu 1: X mi O mu?");
             char mark = getInput().next().charAt(0);
             setPlayer1Mark(Character.toUpperCase(mark));
         } while (getPlayer1Mark() != 'X' && getPlayer1Mark() != 'O');
         System.out.print("\033[H\033[2J");
         if (getPlayer1Mark() == 'X') {
-            System.out.println("Oyuncu 1 X olarak belirlendi.");
-            System.out.println("Oyuncu 2 O olarak belirlendi.");
+            System.out.println("Oyuncu 1 X olarak belirlendi. \nOyuncu 2 O olarak belirlendi.\n");
             setPlayer2Mark('O');
         } else {
-            System.out.println("Oyuncu 1 O olarak belirlendi.");
-            System.out.println("Oyuncu 2 X olarak belirlendi.\n");
+            System.out.println("Oyuncu 1 O olarak belirlendi. \nOyuncu 2 X olarak belirlendi.\n");
             setPlayer2Mark('X');
         }
     }
@@ -78,11 +83,10 @@ public class TicTacToe {
     }
 
     public static void getSelection() {
-        System.out.println("Lütfen 1-9 arasında bir sayı girin: ");
+        System.out.println("\nLütfen 1-9 arasında bir sayı girin: ");
         while (!getInput().hasNextInt()) {
-            System.out.println("Yanlış giriş yaptınız. 1-9 arasında bir sayı giriniz: ");
+            System.out.println("\nYanlış giriş yaptınız. 1-9 arasında bir sayı giriniz: ");
             getInput().next();
-            // rangeCheck(9, 1, selection) == 0
         }
         int selectionPH = getInput().nextInt();
         if (rangeCheck(10, 1, selectionPH) == 0) {
@@ -103,7 +107,7 @@ public class TicTacToe {
         getSelection();
         for (int element : kullanilanlar) {
             while (element == selection) {
-                System.out.println("Seçiminizi boş bir alana yapınız: ");
+                System.out.println("\nSeçiminizi boş bir alana yapınız: ");
                 getSelection();
 
             }
@@ -170,12 +174,11 @@ public class TicTacToe {
     }
 
     public static int checkDiagForWin() {
-        int a = 0;
         if (board[0][0] == board[2][2] && board[1][1] == board[2][2] && board[2][2] != '-'
                 || board[0][2] == board[2][0] && board[1][1] == board[2][0] && board[2][0] != '-') {
-            a = 1;
+            return 1;
         }
-        return a;
+        return 0;
     }
 
     public static int checkForWin() {
@@ -188,26 +191,21 @@ public class TicTacToe {
 
     public static void gameStart() {
         rulesPrinter();
-        System.out.println();
         markSetter();
         int x = 0;
         while (!shouldBreak) {
+            printCurrentBoard();
             playerSelection(x % 2);
             System.out.print("\033[H\033[2J");
-            for (Character[] obj : board) {
-                for (Character obj2 : obj) {
-                    System.out.print(obj2 + " ");
-                }
-                System.out.println();
-            }
             if (checkForWin() == 1) {
+                printCurrentBoard();
                 switch (x % 2) {
                     case 0:
                         if (getPlayer1Mark() == 'X') {
-                            System.out.println("OYUNCU 1 KAZANDI!");
+                            System.out.println("\nOYUNCU 1 KAZANDI!");
 
                         } else {
-                            System.out.println("OYUNCU 2 KAZANDI!");
+                            System.out.println("\nOYUNCU 2 KAZANDI!");
 
                         }
                         shouldBreak = true;
@@ -215,9 +213,9 @@ public class TicTacToe {
 
                     case 1:
                         if (getPlayer1Mark() == 'X') {
-                            System.out.println("OYUNCU 2 KAZANDI!");
+                            System.out.println("\nOYUNCU 2 KAZANDI!");
                         } else {
-                            System.out.println("OYUNCU 1 KAZANDI!");
+                            System.out.println("\nOYUNCU 1 KAZANDI!");
                         }
                         shouldBreak = true;
                         break;
@@ -272,6 +270,7 @@ public class TicTacToe {
         char chooser = 'e';
         while (chooser == 'E' || chooser == 'e') {
             gameStart();
+            System.out.println();
             System.out.println("Devam etmek istiyor musun? E/e veya H/h");
             chooser = getInput().next().charAt(0);
             boardReset();
