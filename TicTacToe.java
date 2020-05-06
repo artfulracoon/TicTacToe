@@ -10,6 +10,7 @@ public class TicTacToe {
     private static int nextIndex = 0;
     private static int selection;
     private static boolean shouldBreak = false;
+    private static int chooser = 1;
 
     public static void boardInputExample() {
         int[][] thisBoard = new int[3][3];
@@ -40,8 +41,7 @@ public class TicTacToe {
         nextIndex = 0;
     }
 
-    public static void printCurrentBoard()
-    {
+    public static void printCurrentBoard() {
         for (Character[] obj : board) {
             for (Character obj2 : obj) {
                 System.out.print(obj2 + " ");
@@ -56,7 +56,7 @@ public class TicTacToe {
         boardInputExample();
         boardReset();
     }
-    
+
     public static void markSetter() {
         do {
             System.out.println("Oyuncu 1: X mi O mu?");
@@ -107,7 +107,7 @@ public class TicTacToe {
         getSelection();
         for (int element : kullanilanlar) {
             while (element == selection) {
-                System.out.println("\nSeçiminizi boş bir alana yapınız: ");
+                System.out.println("\nLütfen seçiminizi boş bir alana yapınız: ");
                 getSelection();
 
             }
@@ -266,16 +266,29 @@ public class TicTacToe {
         return input;
     }
 
-    public static void main(String[] args) {
-        char chooser = 'e';
-        while (chooser == 'E' || chooser == 'e') {
-            gameStart();
-            System.out.println();
-            System.out.println("Devam etmek istiyor musun? E/e veya H/h");
-            chooser = getInput().next().charAt(0);
+    public static void wannaContinue() {
+        while (!getInput().hasNextInt()) {
+            System.out.println("Lütfen geçerli bir sayı giriniz!");
+            getInput().next();
+        }
+        int chooserPH = getInput().nextInt();
+        if (chooserPH == 1 || chooserPH == 2) {
+            chooser = chooserPH;
             boardReset();
             System.out.print("\033[H\033[2J");
             shouldBreak = false;
+        } else {
+            System.out.println("Lütfen geçerli bir sayı giriniz!");
+            wannaContinue();
+        }
+    }
+
+    public static void main(String[] args) {
+        while (chooser == 1) {
+            gameStart();
+            System.out.println("\nDevam etmek istiyor musun? \n1. Evet \n2. Hayır\n");
+            wannaContinue();
+
         }
     }
 
