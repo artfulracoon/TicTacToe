@@ -4,13 +4,14 @@ public class TicTacToe {
 
     private static final Scanner input = new Scanner(System.in);
     private static Character[][] board = new Character[3][3];
-    private static Character player1Mark;
-    private static Character player2Mark;
+    private static Character player1Mark, player2Mark;
     private static int[] kullanilanlar = new int[9];
     private static int nextIndex = 0;
     private static int selection;
     private static boolean shouldBreak = false;
     private static int chooser = 1;
+    private static int oyuncu1Win = 0;
+    private static int oyuncu2Win = 0;
 
     public static void boardInputExample() {
         int[][] thisBoard = new int[3][3];
@@ -203,10 +204,10 @@ public class TicTacToe {
                     case 0:
                         if (getPlayer1Mark() == 'X') {
                             System.out.println("\nOYUNCU 1 KAZANDI!");
-
+                            oyuncu1Win++;
                         } else {
                             System.out.println("\nOYUNCU 2 KAZANDI!");
-
+                            oyuncu2Win++;
                         }
                         shouldBreak = true;
                         break;
@@ -214,8 +215,10 @@ public class TicTacToe {
                     case 1:
                         if (getPlayer1Mark() == 'X') {
                             System.out.println("\nOYUNCU 2 KAZANDI!");
+                            oyuncu2Win++;
                         } else {
                             System.out.println("\nOYUNCU 1 KAZANDI!");
+                            oyuncu1Win++;
                         }
                         shouldBreak = true;
                         break;
@@ -286,6 +289,7 @@ public class TicTacToe {
     public static void main(String[] args) {
         while (chooser == 1) {
             gameStart();
+            System.out.println("\nOyuncu 1: " + oyuncu1Win + "\nOyuncu 2: " + oyuncu2Win);
             System.out.println("\nDevam etmek istiyor musun? \n1. Evet \n2. Hayır\n");
             wannaContinue();
 
