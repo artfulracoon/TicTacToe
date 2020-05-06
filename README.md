@@ -1,2 +1,2 @@
 # TicTacToe
-First Java project. 
+My First Java project. 
