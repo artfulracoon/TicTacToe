@@ -13,6 +13,7 @@ public class TicTacToe {
     private static int oyuncu1Win = 0;
     private static int oyuncu2Win = 0;
     private static String oyuncu1Ad, oyuncu2Ad;
+    private static char charPH;
 
     public static void boardInputExample() {
         int[][] thisBoard = new int[3][3];
@@ -53,7 +54,7 @@ public class TicTacToe {
     }
 
     public static void rulesPrinter() {
-        System.out.println("X-O-X \n\nAlta alta, üst üste veya çapraz olarak üçleyen kazanır."
+        System.out.println("X-O-X \n\nAlt alta, üst üste veya çapraz olarak kendi harfini üçleyen kazanır."
                 + "\nX her zaman önce başlar. \nSeçimlerinizi aşağıdaki tabloya göre yapınız: ");
         boardInputExample();
         boardReset();
@@ -61,16 +62,18 @@ public class TicTacToe {
 
     public static void markSetter() {
         do {
-            System.out.println(oyuncu1Ad + ": X mi O mu?");
+            System.out.println("\n" + oyuncu1Ad + ": X mi O mu?");
             char mark = getInput().next().charAt(0);
             setPlayer1Mark(Character.toUpperCase(mark));
         } while (getPlayer1Mark() != 'X' && getPlayer1Mark() != 'O');
         System.out.print("\033[H\033[2J");
         if (getPlayer1Mark() == 'X') {
-            System.out.println("Oyuncu 1 " + oyuncu1Ad + " X olarak belirlendi." + "\nOyuncu 2 " + oyuncu2Ad + " O olarak belirlendi.\n");
+            System.out.println("Oyuncu 1 " + oyuncu1Ad + " X olarak belirlendi." + "\nOyuncu 2 " + oyuncu2Ad
+                    + " O olarak belirlendi.\n");
             setPlayer2Mark('O');
         } else {
-            System.out.println("Oyuncu 1 " + oyuncu1Ad + " O olarak belirlendi." + "\nOyuncu 2 " + oyuncu2Ad + " X olarak belirlendi.\n");
+            System.out.println("Oyuncu 1 " + oyuncu1Ad + " O olarak belirlendi." + "\nOyuncu 2 " + oyuncu2Ad
+                    + " X olarak belirlendi.\n");
             setPlayer2Mark('X');
         }
     }
@@ -99,11 +102,24 @@ public class TicTacToe {
     }
 
     public static void playerSelection(int x) {
-        char ch;
-        if (x == 0) {
-            ch = 'X';
-        } else {
-            ch = 'O';
+        switch (x) {
+            case 0:
+                charPH = 'X';
+                if (getPlayer1Mark() == 'X') {
+                    System.out.println(oyuncu1Ad);
+                } else {
+                    System.out.println(oyuncu2Ad);
+                }
+                break;
+            case 1:
+                charPH = 'O';
+                System.out.println();
+                if (getPlayer2Mark() == 'X') {
+                    System.out.println(oyuncu1Ad);
+                } else {
+                    System.out.println(oyuncu2Ad);
+                }
+                break;
         }
 
         getSelection();
@@ -115,35 +131,34 @@ public class TicTacToe {
             }
         }
         pushNextIndex(selection);
-        char mark = ch;
         switch (selection) {
 
             case 1:
-                board[0][0] = mark;
+                board[0][0] = charPH;
                 break;
             case 2:
-                board[0][1] = mark;
+                board[0][1] = charPH;
                 break;
             case 3:
-                board[0][2] = mark;
+                board[0][2] = charPH;
                 break;
             case 4:
-                board[1][0] = mark;
+                board[1][0] = charPH;
                 break;
             case 5:
-                board[1][1] = mark;
+                board[1][1] = charPH;
                 break;
             case 6:
-                board[1][2] = mark;
+                board[1][2] = charPH;
                 break;
             case 7:
-                board[2][0] = mark;
+                board[2][0] = charPH;
                 break;
             case 8:
-                board[2][1] = mark;
+                board[2][1] = charPH;
                 break;
             case 9:
-                board[2][2] = mark;
+                board[2][2] = charPH;
                 break;
         }
     }
@@ -192,8 +207,6 @@ public class TicTacToe {
     }
 
     public static void gameStart() {
-        rulesPrinter();
-        adSetter();
         markSetter();
         int x = 0;
         while (!shouldBreak) {
@@ -288,20 +301,25 @@ public class TicTacToe {
         }
     }
 
-    private static void adSetter()
-    {
+    private static void adSetter() {
         System.out.println("Oyuncu 1 isminizi giriniz: (Default: Oyuncu 1)");
         oyuncu1Ad = getInput().nextLine();
-        if (oyuncu1Ad.isEmpty()) {oyuncu1Ad = "Oyuncu 1";}       
+        if (oyuncu1Ad.isEmpty()) {
+            oyuncu1Ad = "Oyuncu 1";
+        }
         System.out.println("Oyuncu 2 isminizi giriniz: (Default: Oyuncu 2)");
         oyuncu2Ad = getInput().nextLine();
-        if (oyuncu2Ad.isEmpty()) {oyuncu2Ad = "Oyuncu 2";} 
+        if (oyuncu2Ad.isEmpty()) {
+            oyuncu2Ad = "Oyuncu 2";
+        }
     }
 
     public static void main(String[] args) {
+        rulesPrinter();
+        adSetter();
         while (chooser == 1) {
             gameStart();
-            System.out.println("\n" + oyuncu1Ad +": " + oyuncu1Win + "\n" + oyuncu2Ad + ": " + oyuncu2Win);
+            System.out.println("\n" + oyuncu1Ad + ": " + oyuncu1Win + "\n" + oyuncu2Ad + ": " + oyuncu2Win);
             System.out.println("\nDevam etmek istiyor musun? \n1. Evet \n2. Hayır\n");
             wannaContinue();
 
