@@ -68,32 +68,28 @@ public class TicTacToe {
         }
     }
 
-    public static int rangeCheck(int high, int low, int num)
-    {
-        if(low <= num && num < high)
-        {
+    public static int rangeCheck(int high, int low, int num) {
+        if (low <= num && num < high) {
             return 1;
+        } else {
+            return 0;
         }
-        else {return 0;}
 
     }
 
-    public static void getSelection()
-    {
+    public static void getSelection() {
         System.out.println("Lütfen 1-9 arasında bir sayı girin: ");
-            while(!getInput().hasNextInt()){
-                System.out.println("Yanlış giriş yaptınız. 1-9 arasında bir sayı giriniz: ");
-                getInput().next();
-                //rangeCheck(9, 1, selection) == 0
-            }
-            int selectionPH = getInput().nextInt();
-            if (rangeCheck(10,1,selectionPH) == 0)
-            {
-                getSelection();
-            }
-            else{
-                selection = selectionPH;
-            }
+        while (!getInput().hasNextInt()) {
+            System.out.println("Yanlış giriş yaptınız. 1-9 arasında bir sayı giriniz: ");
+            getInput().next();
+            // rangeCheck(9, 1, selection) == 0
+        }
+        int selectionPH = getInput().nextInt();
+        if (rangeCheck(10, 1, selectionPH) == 0) {
+            getSelection();
+        } else {
+            selection = selectionPH;
+        }
     }
 
     public static void playerSelection(int x) {
@@ -104,7 +100,6 @@ public class TicTacToe {
             ch = 'O';
         }
 
-        System.out.println("Seçiminizi yapın: ");
         getSelection();
         for (int element : kullanilanlar) {
             while (element == selection) {
@@ -206,7 +201,7 @@ public class TicTacToe {
                 System.out.println();
             }
             if (checkForWin() == 1) {
-                switch (x%2){
+                switch (x % 2) {
                     case 0:
                         if (getPlayer1Mark() == 'X') {
                             System.out.println("OYUNCU 1 KAZANDI!");
@@ -226,8 +221,8 @@ public class TicTacToe {
                         }
                         shouldBreak = true;
                         break;
-                    }
                 }
+            }
             if ((checkZeroes() == 0) && checkForWin() == 0) {
                 System.out.println("BERABERE!");
                 break;
@@ -274,16 +269,15 @@ public class TicTacToe {
     }
 
     public static void main(String[] args) {
-        char chooser;
-        do {
+        char chooser = 'e';
+        while (chooser == 'E' || chooser == 'e') {
             gameStart();
             System.out.println("Devam etmek istiyor musun? E/e veya H/h");
             chooser = getInput().next().charAt(0);
             boardReset();
             System.out.print("\033[H\033[2J");
             shouldBreak = false;
-        } while (chooser == 'E' || chooser == 'e');
-
+        }
     }
 
 }
