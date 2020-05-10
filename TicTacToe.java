@@ -23,13 +23,13 @@ public class TicTacToe {
                 thisBoard[i][j] = (i * 3) + j + 1;
             }
         }
-        for (int[] obj : thisBoard) {
-            for (int obj2 : obj) {
-                System.out.print(obj2 + " ");
+        for (int i = 2; i > -1; i--) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(thisBoard[i][j] + " ");
             }
             System.out.println();
         }
-        System.out.println();
+        System.out.println("\nNumLock Düzeni\n");
     }
 
     public static void boardReset() {
@@ -106,7 +106,7 @@ public class TicTacToe {
             case 0:
                 charPH = 'X';
                 if (getPlayer1Mark() == 'X') {
-                    System.out.println(oyuncu1Ad);
+                    System.out.println("\n" + oyuncu1Ad);
                 } else {
                     System.out.println(oyuncu2Ad);
                 }
@@ -115,7 +115,7 @@ public class TicTacToe {
                 charPH = 'O';
                 System.out.println();
                 if (getPlayer2Mark() == 'X') {
-                    System.out.println(oyuncu1Ad);
+                    System.out.println("\n" + oyuncu1Ad);
                 } else {
                     System.out.println(oyuncu2Ad);
                 }
@@ -134,13 +134,13 @@ public class TicTacToe {
         switch (selection) {
 
             case 1:
-                board[0][0] = charPH;
+                board[2][0] = charPH;
                 break;
             case 2:
-                board[0][1] = charPH;
+                board[2][1] = charPH;
                 break;
             case 3:
-                board[0][2] = charPH;
+                board[2][2] = charPH;
                 break;
             case 4:
                 board[1][0] = charPH;
@@ -152,13 +152,13 @@ public class TicTacToe {
                 board[1][2] = charPH;
                 break;
             case 7:
-                board[2][0] = charPH;
+                board[0][0] = charPH;
                 break;
             case 8:
-                board[2][1] = charPH;
+                board[0][1] = charPH;
                 break;
             case 9:
-                board[2][2] = charPH;
+                board[0][2] = charPH;
                 break;
         }
     }
