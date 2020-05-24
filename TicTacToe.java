@@ -29,7 +29,7 @@ public class TicTacToe {
             }
             System.out.println();
         }
-        System.out.println("\nNumLock Düzeni\n");
+        System.out.println("\nNumpad Düzeni\n");
     }
 
     public static void boardReset() {
